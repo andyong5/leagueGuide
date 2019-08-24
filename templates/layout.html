@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<head>
+	<title>Welcome to LeaguePro</title>
+
+	  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/home">LeagueGuides</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Champions">Champions</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/Champions">Stats</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/na1/ranking/ladder">Leaderboard</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <select id="navRegion">
+        <option value="NA1">NA</option>
+        <option value="KR">KR</option>
+        <option value="JP1">JP</option>
+        <option value="BR1">BR</option>
+        <option value="EUW1">EUW</option>
+        <option value="EUNE">EUNE</option>
+        <option value="OC1">OC</option>
+        <option value="LA2">LAS</option>
+        <option value="LA1">LAN</option>
+        <option value="RU">RU</option>
+        <option value="TR1">TR</option>
+      </select>
+      <input class="form-control mr-sm-2" id="summonerName" type="search" placeholder="Summoner Search" size="30" onkeypress="return enter(event)">
+      <input class="btn btn-outline-success my-2 my-sm-0" type="button" value="Search" onclick="navBarSearch()"></input>
+    </form>
+  </div>
+</nav>
+	
+	{% block content %}{% endblock %}
+
+	 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function getSelectedText(elementId) {
+      var elt = document.getElementById(elementId);
+        return elt.options[elt.selectedIndex].value;
+    }
+    function navBarSearch() {
+      var region = getSelectedText("navRegion");
+      var summonerName2 = document.getElementById("summonerName").value;
+      window.location.replace("http://127.0.0.1:5000/"+region+"/summoner/"+summonerName2);
+    }
+    function enter(e) {
+        if (e.which == 13 || e.keyCode == 13) {
+            navBarSearch();
+            return false;
+        }
+        return true;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{%block content%}
+<section class="home">
+	<h1 class="homeh1">Welcome to LeagueGuides!</h1>
+		<section class="content">
+			<select id="homeRegion">
+				<option value="NA1">North America</option>
+				<option value="KR">Korea</option>
+				<option value="JP1">Japan</option>
+				<option value="BR1">Brazil</option>
+				<option value="EUW1">Europe West</option>
+				<option value="EUNE">Europe Nordic & East</option>
+				<option value="OC1">Oceania</option>
+				<option value="LA2">Las</option>
+				<option value="LA1">Lan</option>
+				<option value="RU">Russia</option>
+				<option value="TR1">Turkey</option>
+			</select>
+
+			<input type="search" id="summonerNameHome" placeholder="Search a summoner" size="40" onkeypress="return enter(event)">
+			<input type="button" value="Search" onclick="homeSearch()"/>
+		</section>
+</section>
+
+<script type="text/javascript">
+	function getSelectedText(elementId) {
+		var elt = document.getElementById(elementId);
+		return elt.options[elt.selectedIndex].value;
+	}
+	function homeSearch() {
+		var homeRegion = getSelectedText("homeRegion");
+		var summonerName = document.getElementById("summonerNameHome").value;
+		window.location.replace("http://127.0.0.1:5000/"+homeRegion+"/summoner/"+summonerName);
+	}
+	function enter(e) {
+	    if (e.which == 13 || e.keyCode == 13) {
+	        homeSearch();
+	        return false;
+	    }
+    	return true;
+	}
+</script>
+{% endblock content %}

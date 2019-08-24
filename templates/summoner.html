@@ -1,0 +1,33 @@
+
+{% extends "layout.html" %}
+{%block content%}
+	<h1 class="summoner">{{data["name"]}}</h1>
+	<section class="info">
+
+		<h2>Current level - {{data["summonerLevel"]}}</h2>
+		{%if rankData[sumRift] is defined %}
+			<h2>Solo Ranking - {{rankData[sumRift]["tier"]}} {{rankData[sumRift]["rank"]}}</h2>
+			<ul class="rankData">
+				<li>League Points - {{rankData[sumRift]["leaguePoints"]}}</li>
+				<li><span class="wins">Wins - {{rankData[sumRift]["wins"]}}</span> | <span class="losses">Losses - {{rankData[sumRift]["losses"]}}</span> </li>
+				<li>Win ratio - {{ ((rankData[sumRift]["wins"] /
+									(rankData[sumRift]["wins"] + rankData[sumRift]["losses"])) * 100)|round|int}}%</li>
+			</ul>
+		{%else%}
+			<h2>Ranking - Unranked</h2>
+		{%endif%}
+
+
+		{%if rankData[TFT] is defined %}
+			<h2>TFT Rank - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
+			<ul class="rankData">
+				<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
+				<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
+				<li>Win ratio - {{ ((rankData[TFT]["wins"] /
+									(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
+			</ul>
+		{%else%}
+			<h2>TFT Rank - Unranked</h2>
+		{% endif %}
+	</section>
+{% endblock content %}

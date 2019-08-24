@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block content %}
+	<section style="text-align: center; margin-bottom: 20px;">
+		<select id="rankRegion">
+			<option value="NA1">North America</option>
+			<option value="KR">Korea</option>
+			<option value="JP1">Japan</option>
+			<option value="BR1">Brazil</option>
+			<option value="EUW1">Europe West</option>
+			<option value="EUN1">Europe Nordic & East</option>
+			<option value="OC1">Oceania</option>
+			<option value="LA2">Las</option>
+			<option value="LA1">Lan</option>
+			<option value="RU">Russia</option>
+			<option value="TR1">Turkey</option>
+		</select>
+
+		<select id="rankQueue">
+			<option value="RANKED_SOLO_5x5">Ranked Solo</option>
+			<option value="RANKED_TFT">Ranked TFT</option>
+			<option value="RANKED_FLEX_SR">Flex 5x5</option>
+			<option value="RANKED_FLEX_TT">Flex TFT</option>
+		</select>
+
+		<select id="rankTier">
+			<option value="CHALLENGER">Challenger</option>
+			<option value="GRANDMASTER">Grandmaster</option>
+			<option value="MASTER">Master</option>
+			<option value="Diamond">Diamond</option>
+		</select>
+
+		<input type="button" value="Search" onclick="rankSearch()"/>
+	</section>
+	<h1 class="leaderBoard">{{newRegion}} {{newQueueType}} {{data[0]["tier"]}} {{data[0]["rank"]}} Leaderboard</h1>
+	<section>
+		<table style=" border-collapse: collapse; align:center;">
+			<tr style="font-size: 30px; text-decoration: underline;">
+				<th scope="col">Summoners</th>
+				<th scope="col">Tier</th>
+				<th scope="col">LP</th>
+				<th scope="col">Win Ratio</th>
+			</tr>
+			{%for i in range (0,len)%}
+				<tr class="border_bottom">
+					<td style="font-size: 30px; font-weight: bold">{{i+1}}. {{data[i]["summonerName"]}}</td>
+					<td>Challenger</td>
+					<td>{{data[i]["leaguePoints"]}} </td>
+					<td style= "color: blue">Wins - {{data[i]["wins"]}}</td>
+					<td style="color: red">Loss - {{data[i]["losses"]}}</td>
+					<td>Win ratio - {{ ((data[i]["wins"] /
+								(data[i]["wins"] + data[i]["losses"])) * 100)|round|int}}%</td>
+				</tr>
+			{%endfor%}
+		</table>
+	</section>
+
+	<footer>
+		<button onclick="window.scrollTo(0,0);">Go to top</button>
+	</footer>
+
+	<script type="text/javascript">
+		function getSelectedText(elementId) {
+			var elt = document.getElementById(elementId);
+    		return elt.options[elt.selectedIndex].value;
+		}
+		function rankSearch() {
+			var region = getSelectedText("rankRegion");
+			var queueType = getSelectedText("rankQueue");
+			var tierType = getSelectedText("rankTier");
+			window.location.replace("http://127.0.0.1:5000/"+region+"/ranking/ladder/"+queueType+"/"+tierType);
+		}
+	</script>
+
+
+{% endblock content %}
