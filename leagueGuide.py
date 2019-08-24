@@ -6,8 +6,6 @@ import requests
 import sys
 import string
 
-doggy dog dogy asdfjkadsklfjsdf ds
-
 app = Flask(__name__)
 
 app.secret_key = '5791628bb0b13ce0c676dfde280ba245'
