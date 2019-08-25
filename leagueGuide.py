@@ -6,19 +6,17 @@ import requests
 import sys
 import string
 
-doggy dog dogy asdfjkadsklfjsdf ds
-
 app = Flask(__name__)
 
 app.secret_key = '5791628bb0b13ce0c676dfde280ba245'
 
 
-apiKey = "RGAPI-2c84d50a-032a-4ab2-a896-be27e1418182"
+apiKey = ""
 
 
 def rewrittenRegion(region):
-    if region == "NA1":
-        return "North America"
+    if region == "TR1":
+        return "Turkey"
     elif region == "KR":
         return "Korea"
     elif region == "JP1":
@@ -38,7 +36,7 @@ def rewrittenRegion(region):
     elif region == "RU":
         return "Russia"
     else:
-        return "Turkey"
+        return "North America"
 
 
 def rewrittenQueueTypes(title):
@@ -103,7 +101,7 @@ def printCurrentRanking(region, queueType, tier):
     data = printCurrentRankings(region, apiKey, queueType, tier, division)
     newQueueType = rewrittenQueueTypes(data[0]["queueType"])
     newRegion = rewrittenRegion(region)
-    return render_template('ranking.html', len=len(data), data=data, newQueueType=newQueueType, newRegion=newRegion)
+    return render_template('ranking.html', len=len(data), data=data, newQueueType=newQueueType, newRegion=newRegion, region=region)
 
 
 @app.route('/<region>/ranking/ladder')
@@ -114,16 +112,18 @@ def printChallenger(region):
     data = printCurrentRankings(region, apiKey, queueType, tier, division)
     newQueueType = rewrittenQueueTypes(data[0]["queueType"])
     newRegion = rewrittenRegion(region)
-    return render_template('ranking.html', len=len(data), data=data, newQueueType=newQueueType, newRegion=newRegion)
+    return render_template('ranking.html', len=len(data), data=data, newQueueType=newQueueType, newRegion=newRegion, region=region)
 
 
 @app.route('/<region>/summoner/<name>')
 def summonerSearch(region, name):
     data = getSummonerInfo(region, apiKey, name)
     rankData = getRankData(region, apiKey, data["id"])
-    sumRift = 0
-    TFT = 1
-    return render_template('summoner.html', name=name, data=data, rankData=rankData, sumRift=sumRift, TFT=TFT)
+    length = len(rankData)
+    TFT = 0
+    sumRift = 1
+    num = 2
+    return render_template('summoner.html', name=name, data=data, rankData=rankData, sumRift=sumRift, TFT=TFT, length=length, num=num)
 
 
 @app.route('/champion/<name>')

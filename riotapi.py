@@ -92,7 +92,7 @@ def getRankData(region, APIKey, summonerID):
     return json.loads(response.content)
 
 
-apiKey = "RGAPI-2c84d50a-032a-4ab2-a896-be27e1418182"
+apiKey = "RGAPI-e31511f9-13c7-4523-ba3a-de1a119f2be9"
 region = "na1"
 
 
@@ -103,8 +103,12 @@ summonerName = addSpaceInName(nameInput)
 print(summonerName)
 summonerID = getSummonerID(region, summonerName, apiKey)
 print(summonerID)
-if summonerID == -1:
-    print("dog")
+url = "https://" + region + ".api.riotgames.com/lol/league/v4/entries/by-summoner/" + \
+    summonerID + "?page=1&api_key=" + apiKey
+response = requests.get(url)
+response.status_code
+data = json.loads(response.content)
+print(data[0]['tier'])
 '''
 printCurrentRankings(region, apiKey, "RANKED_SOLO_5x5", "CHALLENGER", "I")
 '''

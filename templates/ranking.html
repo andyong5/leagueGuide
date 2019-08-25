@@ -42,7 +42,7 @@
 			</tr>
 			{%for i in range (0,len)%}
 				<tr class="border_bottom">
-					<td style="font-size: 30px; font-weight: bold">{{i+1}}. {{data[i]["summonerName"]}}</td>
+					<td id="name" style="font-size: 30px; font-weight: bold">{{i+1}}. <a href="/{{region}}/summoner/{{data[i]['summonerName']}}">{{data[i]["summonerName"]}}</a></td>
 					<td>Challenger</td>
 					<td>{{data[i]["leaguePoints"]}} </td>
 					<td style= "color: blue">Wins - {{data[i]["wins"]}}</td>
@@ -67,7 +67,7 @@
 			var region = getSelectedText("rankRegion");
 			var queueType = getSelectedText("rankQueue");
 			var tierType = getSelectedText("rankTier");
-			window.location.replace("http://127.0.0.1:5000/"+region+"/ranking/ladder/"+queueType+"/"+tierType);
+			window.location.replace("/"+region+"/ranking/ladder/"+queueType+"/"+tierType);
 		}
 	</script>
 
