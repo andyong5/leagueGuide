@@ -1,5 +1,5 @@
 # LeagueGuide
-A website I made over the summer about League of Legends using python, flask, html, css, and javascript that utilizes the Riot API to grab data and display it.
+A website I made over the summer about League of Legends using python, flask, html, css, boostrap, and javascript that utilizes the Riot API to grab data and display it.
 
 Homepage
 <img src="images/homeScreen.png" width=800>
