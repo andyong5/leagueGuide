@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = '5791628bb0b13ce0c676dfde280ba245'
 
 
-apiKey = "RGAPI-3393379a-cb60-48f6-bca4-cf994e7878cd"
+apiKey = ""
 
 
 def rewrittenRegion(region):
