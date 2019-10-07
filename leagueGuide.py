@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = '5791628bb0b13ce0c676dfde280ba245'
 
 
-apiKey = ""
+apiKey = "RGAPI-3393379a-cb60-48f6-bca4-cf994e7878cd"
 
 
 def rewrittenRegion(region):
@@ -89,6 +89,23 @@ def getTop3Mastery(region, APIKey, summonerID):
                                     " and champion Mastery = " + str(data[i]["championPoints"])))
 
 
+def getMatchHistory(region, accountId, apiKey, endIndex):
+    url = "https://" + region + ".api.riotgames.com/lol/match/v4/matchlists/by-account/" + \
+        accountId + "?endindex=" + endIndex + "&api_key=" + apiKey
+    response = requests.get(url)
+    response.status_code
+    return json.loads(response.content)
+
+
+def getMatchInfo(region, matchID, apiKey):
+    url = "https://" + region + \
+        ".api.riotgames.com/lol/match/v4/matches/" + \
+        str(matchID) + "?api_key=" + apiKey
+    response = requests.get(url)
+    response.status_code
+    return json.loads(response.content)
+
+
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
 def hello_world():
@@ -117,13 +134,25 @@ def printChallenger(region):
 
 @app.route('/<region>/summoner/<name>')
 def summonerSearch(region, name):
-    data = getSummonerInfo(region, apiKey, name)
-    rankData = getRankData(region, apiKey, data["id"])
+    summonerInfo = getSummonerInfo(region, apiKey, name)
+    rankData = getRankData(region, apiKey, summonerInfo["id"])
+    accountId = summonerInfo["accountId"]
+    matchHistoryList = getMatchHistory(region, accountId, apiKey, str(10))
+    individualMatchInfo = []
+    x = 0
+    for x in range(len(matchHistoryList)):
+        individualMatchInfo.append(getMatchInfo(
+            region, matchHistoryList["matches"][x]["gameId"], apiKey))
     length = len(rankData)
+    matchHistoryLength = len(matchHistoryList)
     TFT = 0
     sumRift = 1
     num = 2
-    return render_template('summoner.html', name=name, data=data, rankData=rankData, sumRift=sumRift, TFT=TFT, length=length, num=num)
+    num2 = 6
+    return render_template('summoner.html', name=name,
+                           summonerInfo=summonerInfo, rankData=rankData,
+                           sumRift=sumRift, TFT=TFT, length=length, num=num,
+                           individualMatchInfo=individualMatchInfo, matchHistoryLength=matchHistoryLength, num2=num2)
 
 
 @app.route('/champion/<name>')

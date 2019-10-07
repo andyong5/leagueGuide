@@ -1,71 +1,94 @@
 
 {% extends "layout.html" %}
 {%block content%}
-	<h1 class="summoner">{{data["name"]}}</h1>
-	<section class="info">
+	<h1 class="summoner">{{summonerInfo["name"]}}</h1>
 
-		<h2>Current level - {{data["summonerLevel"]}}</h2>
+	<section class="bigBox">
+		<section class="info">
 
-		{%if length == TFT %}
-			<h2>TFT Ranking - Unranked</h2>
-			<h2>Solo Ranking - Unranked</h2>
-		{%endif%}
+			<h2>Current level - {{summonerInfo["summonerLevel"]}}</h2>
 
-		{%if (length == sumRift) and (rankData[TFT]["queueType"] == 'RANKED_TFT')%}
+			{%if length == TFT %}
+				<h2>TFT Ranking - Unranked</h2>
+				<h2>Solo Ranking - Unranked</h2>
+			{%endif%}
+
+			{%if (length == sumRift) and (rankData[TFT]["queueType"] == 'RANKED_TFT')%}
+				<h2>TFT Rank - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
+				<ul class="rankData">
+					<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
+					<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
+					<li>Win ratio - {{ ((rankData[TFT]["wins"] /
+										(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
+				</ul>
+			{%endif%}
+
+			{%if (length == sumRift) and (rankData[TFT]['queueType'] == "RANKED_SOLO_5x5")%}
+				<h2>TFT Ranking - Unranked</h2>
+				<h2>Solo Ranking - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
+				<ul class="rankData">
+					<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
+					<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
+					<li>Win ratio - {{ ((rankData[TFT]["wins"] /
+										(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
+				</ul>
+			{%endif%}
+
+
+			{%if length == num and rankData[TFT]["queueType"] == 'RANKED_TFT'%}
 			<h2>TFT Rank - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
-			<ul class="rankData">
-				<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
-				<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
-				<li>Win ratio - {{ ((rankData[TFT]["wins"] /
-									(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
-			</ul>
-		{%endif%}
-
-		{%if (length == sumRift) and (rankData[TFT]['queueType'] == "RANKED_SOLO_5x5")%}
-			<h2>TFT Ranking - Unranked</h2>
-			<h2>Solo Ranking - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
-			<ul class="rankData">
-				<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
-				<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
-				<li>Win ratio - {{ ((rankData[TFT]["wins"] /
-									(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
-			</ul>
-		{%endif%}
+				<ul class="rankData">
+					<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
+					<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
+					<li>Win ratio - {{ ((rankData[TFT]["wins"] /
+										(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
+				</ul>
+				<h2>Solo Ranking - {{rankData[sumRift]["tier"]}} {{rankData[sumRift]["rank"]}}</h2>
+				<ul class="rankData">
+					<li>League Points - {{rankData[sumRift]["leaguePoints"]}}</li>
+					<li><span class="wins">Wins - {{rankData[sumRift]["wins"]}}</span> | <span class="losses">Losses - {{rankData[sumRift]["losses"]}}</span> </li>
+					<li>Win ratio - {{ ((rankData[sumRift]["wins"] /
+										(rankData[sumRift]["wins"] + rankData[sumRift]["losses"])) * 100)|round|int}}%</li>
+				</ul>
+			{%endif%}
 
 
-		{%if length == num and rankData[TFT]["queueType"] == 'RANKED_TFT'%}
-		<h2>TFT Rank - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
-			<ul class="rankData">
-				<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
-				<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
-				<li>Win ratio - {{ ((rankData[TFT]["wins"] /
-									(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
-			</ul>
-			<h2>Solo Ranking - {{rankData[sumRift]["tier"]}} {{rankData[sumRift]["rank"]}}</h2>
-			<ul class="rankData">
-				<li>League Points - {{rankData[sumRift]["leaguePoints"]}}</li>
-				<li><span class="wins">Wins - {{rankData[sumRift]["wins"]}}</span> | <span class="losses">Losses - {{rankData[sumRift]["losses"]}}</span> </li>
-				<li>Win ratio - {{ ((rankData[sumRift]["wins"] /
-									(rankData[sumRift]["wins"] + rankData[sumRift]["losses"])) * 100)|round|int}}%</li>
-			</ul>
-		{%endif%}
+			{%if length == num and rankData[TFT]["queueType"] == 'RANKED_SOLO_5x5'%}
+				<h2>TFT Rank - {{rankData[sumRift]["tier"]}} {{rankData[sumRift]["rank"]}}</h2>
+				<ul class="rankData">
+					<li>League Points - {{rankData[sumRift]["leaguePoints"]}}</li>
+					<li><span class="wins">Wins - {{rankData[sumRift]["wins"]}}</span> | <span class="losses">Losses - {{rankData[sumRift]["losses"]}}</span> </li>
+					<li>Win ratio - {{ ((rankData[sumRift]["wins"] /
+										(rankData[sumRift]["wins"] + rankData[sumRift]["losses"])) * 100)|round|int}}%</li>
+				</ul>
+				<h2>Solo Ranking - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
+				<ul class="rankData">
+					<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
+					<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
+					<li>Win ratio - {{ ((rankData[TFT]["wins"] /
+										(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
+				</ul>
+			{%endif%}
+		</section>
 
+		<section class="matchHistory">
+			<h1><u>Match History</u></h1>
+			<section class="match">
+				{%for i in range (matchHistoryLength)%}
+					<section class ="redTeam">
+						{%for j in range (5)%}
 
-		{%if length == num and rankData[TFT]["queueType"] == 'RANKED_SOLO_5x5'%}
-			<h2>TFT Rank - {{rankData[sumRift]["tier"]}} {{rankData[sumRift]["rank"]}}</h2>
-			<ul class="rankData">
-				<li>League Points - {{rankData[sumRift]["leaguePoints"]}}</li>
-				<li><span class="wins">Wins - {{rankData[sumRift]["wins"]}}</span> | <span class="losses">Losses - {{rankData[sumRift]["losses"]}}</span> </li>
-				<li>Win ratio - {{ ((rankData[sumRift]["wins"] /
-									(rankData[sumRift]["wins"] + rankData[sumRift]["losses"])) * 100)|round|int}}%</li>
-			</ul>
-			<h2>Solo Ranking - {{rankData[TFT]["tier"]}} {{rankData[TFT]["rank"]}}</h2>
-			<ul class="rankData">
-				<li>League Points - {{rankData[TFT]["leaguePoints"]}}</li>
-				<li><span class="wins">Wins - {{rankData[TFT]["wins"]}}</span> | <span class="losses">Losses - {{rankData[TFT]["losses"]}}</span> </li>
-				<li>Win ratio - {{ ((rankData[TFT]["wins"] /
-									(rankData[TFT]["wins"] + rankData[TFT]["losses"])) * 100)|round|int}}%</li>
-			</ul>
-		{%endif%}
+							<h6>{{individualMatchInfo[i]["participantIdentities"][j]["player"]["summonerName"]}}</h6>
+						{%endfor%}
+					</section>
+					
+					<section class="blueTeam">
+						{%for num2 in range (matchHistoryLength)%}
+							<h6>{{individualMatchInfo[i]["participantIdentities"][num2]["player"]["summonerName"]}}</h6>
+						{%endfor%}
+					</section>
+				{%endfor%}
+			</section>
+		</section>
 	</section>
 {% endblock content %}

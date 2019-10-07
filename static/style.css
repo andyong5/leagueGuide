@@ -33,8 +33,31 @@ footer{
 	margin-bottom: 30px;
 	border-bottom: 2px solid black;
 }
+.bigBox{
+	background-color: aqua;
+	margin:auto;
+	height: 1000px;
+	overflow: hidden;
+}
 .info{
-	padding-left: 10%;
+	margin-left: 2%;
+	width: 30%;
+	border-style: solid;
+	border-width: 2px;
+	border-color:black;
+	background-color: red;
+	float: left;
+}
+.matchHistory{
+	overflow: hidden;
+}
+.redTeam{
+	float:left;
+	background-color: red;
+}
+.blueTeam{
+	overflow: hidden;
+	background-color: blue;
 }
 .wins{
 	color:blue;

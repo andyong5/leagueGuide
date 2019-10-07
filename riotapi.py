@@ -9,10 +9,8 @@ def getSummonerID(region, summonerName, APIKey):
         summonerName + '?api_key=' + APIKey
     response = requests.get(url)
     response.status_code
-    if(response.status_code != requests.codes.ok):
-        return -1
     data = json.loads(response.content)
-    return data["id"]
+    return data["accountId"]
 
 
 def getTop3Mastery(region, APIKey, summonerID):
@@ -92,7 +90,7 @@ def getRankData(region, APIKey, summonerID):
     return json.loads(response.content)
 
 
-apiKey = "RGAPI-e31511f9-13c7-4523-ba3a-de1a119f2be9"
+apiKey = "RGAPI-61d4746c-5157-4888-923e-320ac18fdd9c"
 region = "na1"
 
 
@@ -103,12 +101,7 @@ summonerName = addSpaceInName(nameInput)
 print(summonerName)
 summonerID = getSummonerID(region, summonerName, apiKey)
 print(summonerID)
-url = "https://" + region + ".api.riotgames.com/lol/league/v4/entries/by-summoner/" + \
-    summonerID + "?page=1&api_key=" + apiKey
-response = requests.get(url)
-response.status_code
-data = json.loads(response.content)
-print(data[0]['tier'])
+
 '''
 printCurrentRankings(region, apiKey, "RANKED_SOLO_5x5", "CHALLENGER", "I")
 '''
